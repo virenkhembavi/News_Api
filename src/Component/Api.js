@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Axios from 'axios'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,6 +14,20 @@ import styled from 'styled-components'
 export default function Api() {
     const [news, setNews] = useState([]);
     const [data, setData] = useState(null);
+
+    // debouncing function has been used
+
+    // const debounce = (func) => {
+    //     let timer;
+    //     return function (...args) {
+    //         const context = this;
+    //         if (timer) clearTimeout(timer)
+    //         timer = setTimeout(() => {
+    //             timer = null
+    //             func.apply(context, args)
+    //         }, 500)
+    //     }
+    // }
 
     useEffect(() => {
 
@@ -31,10 +45,20 @@ export default function Api() {
 
     }, [data])
 
+
     const handleChange = (event) => {
         setData(event.target.value)
         // console.log(event.target.value)
     }
+    // useCallback(debounce(handleChange), [])
+    // const optimisedversion = useCallback(debounce(handleChange), [])
+
+    // useCallback(
+    //     () => {
+    //         debounce(handleChange)
+    //     },
+    //     [],
+    // )
 
 
     return (
@@ -43,12 +67,13 @@ export default function Api() {
                 <Bottom >
                     <h5 style={{
                         textAlign: "center",
-                        fontSize:"35px",
-                        fontFamily:"sans-serif",
-                        textDecoration:"underline"
+                        fontSize: "35px",
+                        fontFamily: "sans-serif",
+                        textDecoration: "underline",
+                        margin: "20px"
                     }}>Get Lastest News.</h5>
                     <Message>
-                        <TextField id="outlined-basic" label="Search.." variant="outlined" value={data} onChange={handleChange} style={{ background: "white", width:"320px", }} />
+                        <TextField id="outlined-basic" label="Search.." variant="outlined" value={data} onChange={handleChange} style={{ background: "white", width: "320px", }} />
                     </Message>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
